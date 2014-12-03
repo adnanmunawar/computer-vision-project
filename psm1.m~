@@ -44,5 +44,4 @@ disp('Created a Publisher');
      pub.publish(msg);
      pause(0.01);
  end
-added one line
 
