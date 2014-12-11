@@ -41,3 +41,5 @@ wholeImageBW=rgb2gray(wholeImage);
 warpedGx=warp_image(wholeGx,p,[x,y],template);
 warpedGy=warp_image(wholeGy,p,[x,y],template);
 
+sd_image = steep_descent(warpedGx,warpedGy,template);
+imshow(sd_image) 
