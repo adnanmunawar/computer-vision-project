@@ -35,5 +35,5 @@ for w=1:width
     Avg=[xAvg yAvg];
 end
 
-surf(-distanceArray)
+%surf(-distanceArray)
 end

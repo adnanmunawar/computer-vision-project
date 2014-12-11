@@ -32,13 +32,16 @@ WP_jacobian_x = [ ones(templateX,templateY) , zeros(templateX,templateY) , x_mat
 WP_jacobian_y = [ zeros(templateX,templateY) , ones(templateX,templateY) , y_mat] ;
 
 WP_jacobian = [WP_jacobian_x ; WP_jacobian_y ] ;
+figure
 imshow(WP_jacobian) 
 
-testSection=warp_image(wholeImage,p,[x,y],template);
+testSection=warp_image(wholeImage,p,template);
+figure
 imshow(testSection);
 
 %Difference Image
 diffIm=im2double(testSection-template);
+%figure
 %imshow(testSection-template);
 imageError=0; %initialize error
 for xPix=1:1:templateX
@@ -49,8 +52,9 @@ end
 
 wholeImageBW=rgb2gray(wholeImage);
 [wholeGx, wholeGy]=imgradientxy(wholeImageBW);
-warpedGx=warp_image(wholeGx,p,[x,y],template);
-warpedGy=warp_image(wholeGy,p,[x,y],template);
+warpedGx=warp_image(wholeGx,p,template);
+warpedGy=warp_image(wholeGy,p,template);
 
 % sd_image = steep_descent(warpedGx,warpedGy,template);
+%figure
 % imshow(sd_image) 
