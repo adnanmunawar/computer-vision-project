@@ -1,14 +1,17 @@
-function SD = steep_descent(warp_gradx,warp_grady,template)
+function SD = steep_descent(warp_gradx,warp_grady,jbian,template)
 
 templateX=size(template,2);
 templateY=size(template,1);
-WP_Jacobian_x=[templateX(:) zeros(templateX(:)) templateY(:) zeros(templateX(:)) ones(templateX(:)) zeros(templateX(:))];
-WP_Jacobian_y=[zeros(templateX(:)) templateX(:) zeros(templateX(:)) templateY(:) zeros(templateX(:)) ones(templateX(:))];
 
-SD=zeros(templateX,6);
-for pix=1:templateX,
-    WP_Jacobian=[WP_Jacobian_x(pix,:); WP_Jacobian_y(pix,:)];
-    Gradient=[warp_gradx(pix) warp_grady(pix)];
-    SD(pix,1:6)=Gradient*WP_Jacobian;
+wgx_norm = warp_gradx/255 ;
+wgy_norm = warp_grady/255 ;
+
+SD=zeros(templateX*3,templateY);
+for count=1:3
+    for pix = 1:templateX
+        SD_upper((pix*count),:) = wgx_norm(pix,:) .* jbian(pix,1:templateY) ;
+        SD_lower((pix*count),:) = wgy_norm(pix,:) .* jbian(pix,(template+1:2*template)) ;
+        SD = SD_upper+SD_lower
+    end
 end
-end
+SD

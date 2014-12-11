@@ -1,0 +1,11 @@
+function SD = steep_descent(warp_gradx,warp_grady,jbian)
+wgx_norm = warp_gradx/255 ;
+wgy_norm = warp_grady/255 ;
+
+SD=zeros(templateX*3,templateY);
+for count=1:3
+    for pix = 1:templateX
+        SD((pix*count),:) = wgx_norm(pix,:) .* jbian
+        
+    end
+end
