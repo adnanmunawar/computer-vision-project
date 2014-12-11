@@ -32,6 +32,8 @@ for w=1:width
         xAvg=0;
         yAvg=0;
     end
-    surf(-distanceArray)
     Avg=[xAvg yAvg];
+end
+
+surf(-distanceArray)
 end
