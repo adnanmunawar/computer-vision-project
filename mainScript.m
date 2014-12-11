@@ -11,7 +11,7 @@ wholeY=size(wholeImage,1);
 % Set initial values
 xTrans=200;
 dx=0;
-yTrans=180;
+yTrans=170;
 dy=0;
 rotDeg=0;
 dRot=0;
@@ -19,7 +19,7 @@ scale=1;
 dScale=0;
 
 p=[xTrans, yTrans, rotDeg, scale]; %p vector for translation in x, y, rotation in deg, and scale
-
+windowSize=11;
 dp=[dx, dy, dRot,dScale];
 p=p+dp;
 
@@ -31,7 +31,7 @@ imshow(testSection);
 
 %Difference Image
 diffIm=im2double(testSection-template);
-imshow(testSection-template);
+%imshow(testSection-template);
 imageError=0; %initialize error
 for x=1:1:templateX
     for y=1:1:templateY
