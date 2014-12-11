@@ -23,7 +23,8 @@ p=[x + xTrans, y + yTrans, rotDeg, scale]; %p vector for translation in x, y, ro
 dp=[dx, dy, dRot,dScale];
 
 j = jacobian(p,[x y])
-x = 0 ; y = 0 ;
+x= 0 ; y= 0 ;
+
 testSection=warp_image(wholeImage,p,[x,y],template);
 
 %Difference Image
