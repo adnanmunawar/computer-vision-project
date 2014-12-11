@@ -1,8 +1,8 @@
 clc; clear all; close all;
 
 template=imread('ball.jpg');
-templateX=size(template,2);
-templateY=size(template,1);
+%templateX=size(template,2);
+%templateY=size(template,1);
 
 wholeImage=imread('table.jpg');
 wholeX=size(wholeImage,2);
@@ -22,11 +22,7 @@ p=[xTrans, yTrans, rotDeg, scale]; %p vector for translation in x, y, rotation i
 
 dp=[dx, dy, dRot,dScale];
 
-%Defining test section
-cropX=templateX*scale;
-cropY=templateY*scale;
-testSection=imcrop(wholeImage,[p(1) p(2) cropX-1 cropY-1]); %-1 to crop
-%imshow(testSection);
+
 
 %Difference Image
 diffIm=im2double(testSection-template);
