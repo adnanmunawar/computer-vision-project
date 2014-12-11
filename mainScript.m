@@ -30,14 +30,14 @@ testSection=warp_image(wholeImage,p,[x,y],template);
 diffIm=im2double(testSection-template);
 %imshow(testSection-template);
 imageError=0; %initialize error
-for x=1:1:templateX
-    for y=1:1:templateY
-        imageError=diffIm(x,y)^2+imageError;
+for xPix=1:1:templateX
+    for yPix=1:1:templateY
+        imageError=diffIm(xPix,yPix)^2+imageError;
     end
 end
 
 wholeImageBW=rgb2gray(wholeImage);
 [wholeGx, wholeGy]=imgradientxy(wholeImageBW);
-warpedGx=warp_image(wholeGx,p,template);
-warpedGy=warp_image(wholeGy,p,template);
+warpedGx=warp_image(wholeGx,p,[x,y],template);
+warpedGy=warp_image(wholeGy,p,[x,y],template);
 
