@@ -19,10 +19,9 @@ scale=1;
 dScale=0;
 
 p=[xTrans, yTrans, rotDeg, scale]; %p vector for translation in x, y, rotation in deg, and scale
-
 dp=[dx, dy, dRot,dScale];
 
-
+testSection=warp_image(wholeImage,p,template);
 
 %Difference Image
 diffIm=im2double(testSection-template);
@@ -38,9 +37,11 @@ p=p+dp;
 
 wholeImageBW=rgb2gray(wholeImage);
 [wholeGx, wholeGy]=imgradientxy(wholeImageBW);
+warpedGx=warp_image(wholeGx,p,template);
+warpedGy=warp_image(wholeGy,p,template);
 
 testSectionBW=rgb2gray(testSection);
 [Gx,Gy]=imgradientxy(testSectionBW);
 
-imshow(Gy)
+figure; imshowpair(warpedGx,Gx,'montage');
 
