@@ -1,0 +1,4 @@
+function warped_image = warp(image,warp_param,template)
+templateX=size(template,2);
+templateY=size(template,1);
+end
