@@ -19,13 +19,21 @@ rotDeg=0;
 dRot=0;
 scale=1;
 dScale=0;
-syms x y ;
 
-p=[x + xTrans, y + yTrans, rotDeg, scale]; %p vector for translation in x, y, rotation in deg, and scale
+p=[scale,0,xTrans ; 0,scale,yTrans]; %p vector for translation in x, y, rotation in deg, and scale
 dp=[dx, dy, dRot,dScale];
+for pix=1:templateY
+    y_mat(:,pix) = (0:templateX-1)/(templateX-1) ;
+end
+for pix=1:templateX
+    x_mat(pix,:) = (0:templateY-1)/(templateY-1) ;
+end
+WP_jacobian_x = [ ones(templateX,templateY) , zeros(templateX,templateY) , x_mat] ;
+WP_jacobian_y = [ zeros(templateX,templateY) , ones(templateX,templateY) , y_mat] ;
 
-j = jacobian(p,[x y]);
-x = 0 ; y = 0 ;
+WP_jacobian = [WP_jacobian_x ; WP_jacobian_y ] ;
+imshow(WP_jacobian) 
+
 testSection=warp_image(wholeImage,p,[x,y],template);
 imshow(testSection);
 
