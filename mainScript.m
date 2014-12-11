@@ -1,8 +1,8 @@
 clc; clear all; close all;
 
 template=imread('ball.jpg');
-%templateX=size(template,2);
-%templateY=size(template,1);
+templateX=size(template,2);
+templateY=size(template,1);
 
 wholeImage=imread('table.jpg');
 wholeX=size(wholeImage,2);
@@ -33,15 +33,8 @@ for x=1:1:templateX
     end
 end
 
-p=p+dp;
-
 wholeImageBW=rgb2gray(wholeImage);
 [wholeGx, wholeGy]=imgradientxy(wholeImageBW);
 warpedGx=warp_image(wholeGx,p,template);
 warpedGy=warp_image(wholeGy,p,template);
-
-testSectionBW=rgb2gray(testSection);
-[Gx,Gy]=imgradientxy(testSectionBW);
-
-figure; imshowpair(warpedGx,Gx,'montage');
 
