@@ -9,22 +9,22 @@ wholeX=size(wholeImage,2);
 wholeY=size(wholeImage,1);
 
 % Set initial values
-xTrans=200;
+xTrans=197;
 dx=5;
-yTrans=170;
+yTrans=167;
 dy=5;
 rotDeg=0;
 dRot=0;
 scale=1;
 dScale=0;
-windowSize=13;
+windowSize=25;
 upDown=(windowSize+1)/2;
 SSE=zeros(windowSize)+1000000;
 minError=inf;
 for m=1:1:windowSize
     for n=1:1:windowSize
         
-        p=[xTrans+1*(m-upDown), yTrans+1*(n-upDown), rotDeg, scale]; %p vector for translation in x, y, rotation in deg, and scale
+        p=[xTrans+3*(m-upDown), yTrans+3*(n-upDown), rotDeg, scale]; %p vector for translation in x, y, rotation in deg, and scale
 
         dp=[dx, dy, dRot,dScale];
                 
@@ -45,12 +45,10 @@ for m=1:1:windowSize
         end
         
         SSE(m,n)=imageError;
-        if imageError<minError
-            minX=p(1)
-            minY=p(2)
-            minError=imageError;
         %p=p+dp;
     end
     
 end
+minX
+minY
 surf(1:m,1:n,-SSE)
