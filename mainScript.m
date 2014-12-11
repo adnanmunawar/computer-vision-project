@@ -22,7 +22,7 @@ syms x y ;
 p=[x + xTrans, y + yTrans, rotDeg, scale]; %p vector for translation in x, y, rotation in deg, and scale
 dp=[dx, dy, dRot,dScale];
 
-j = jacobian(p,[x y])
+j = jacobian(p,[x y]);
 x = 0 ; y = 0 ;
 testSection=warp_image(wholeImage,p,[x,y],template);
 
