@@ -9,15 +9,16 @@ wholeX=size(wholeImage,2);
 wholeY=size(wholeImage,1);
 
 % Set initial values
-xTrans=0;
-yTrans=0;
+xTrans=200;
+yTrans=200;
 rotDeg=0;
 scale=1;
 
 p=[xTrans, yTrans, rotDeg, scale]; %p vector for translation in x, y, rotation in deg, and scale
 
 %Defining test section
-cropXMax=xTrans+templateX*scale;
-cropYMax=yTrans+templateY*scale;
-testSection=imcrop(wholeImage,[xTrans yTrans cropXMax cropYMax]);
+cropX=templateX*scale;
+cropY=templateY*scale;
+testSection=imcrop(wholeImage,[xTrans yTrans cropX cropY]);
 imshow(testSection);
+
