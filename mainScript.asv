@@ -1,0 +1,5 @@
+clc; clear all; close all;
+
+template=imread('ball.jpg');
+wholeImage=imread('table.jpg');
+
