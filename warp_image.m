@@ -5,8 +5,8 @@ templateX=size(template,2);
 templateY=size(template,1);
 
 warp_param_sub=warp_param;
-warp_param_sub=subs(warp_param_sub,x,update_param(1))
-warp_param_sub=subs(warp_param_sub,y,update_param(2))
+warp_param_sub=subs(warp_param_sub,x,update_param(1));
+warp_param_sub=subs(warp_param_sub,y,update_param(2));
 
 
 %Defining test section
