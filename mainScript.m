@@ -16,6 +16,7 @@ scale=1;
 
 p=[xTrans, yTrans, rotDeg, scale]; %p vector for translation in x, y, rotation in deg, and scale
 
+%Defining test section
 cropXMax=xTrans+templateX*scale;
 cropYMax=yTrans+templateY*scale;
 testSection=imcrop(wholeImage,[xTrans yTrans cropXMax cropYMax]);
