@@ -16,7 +16,7 @@ for w=1:width
         P=[fullImage(l,w,1),fullImage(l,w,2),fullImage(l,w,3)];
         distance(w,l)=((P(1)-R)^2+(P(2)-G)^2+(P(3)-B)^2);
         distance(w,l)=sqrt(double(distance(w,l)));
-        if distance(w,l)<16
+        if distance(w,l)<5
             xTotal=xTotal+w;
             yTotal=yTotal+l;
             foundPix=foundPix+1;
