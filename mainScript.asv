@@ -1,5 +1,19 @@
 clc; clear all; close all;
 
 template=imread('ball.jpg');
-wholeImage=imread('table.jpg');
+templateX=size(template,2);
+templateY=size(template,1);
 
+wholeImage=imread('table.jpg');
+wholeX=size(wholeImage,2);
+wholeY=size(wholeImage,1);
+
+% Set initial values
+xTrans=0;
+yTrans=0;
+rotDeg=0;
+scale=1;
+
+p=[xTrans, yTrans, rotDeg, scale]; %p vector for translation in x, y, rotation in deg, and scale
+
+%testSection=imcrop(wholeImage,[xTrans,yTrans,xTrans+templateX*scale,yTrans+
