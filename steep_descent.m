@@ -5,13 +5,20 @@ templateY=size(template,1);
 
 wgx_norm = warp_gradx/255 ;
 wgy_norm = warp_grady/255 ;
+figure ; imshowpair(wgx_norm,wgy_norm,'montage') ;
 
-SD=zeros(templateX*3,templateY);
-for count=1:3
+SD=zeros(templateY,templateX*3);
+for count=0:2
+    SD_upper = zeros(templateY,templateX) ;
+    SD_lower = zeros(templateY,templateX) ;
     for pix = 1:templateX
-        SD_upper((pix*count),:) = wgx_norm(pix,:) .* jbian(pix,1:templateY) ;
-        SD_lower((pix*count),:) = wgy_norm(pix,:) .* jbian(pix,(template+1:2*template)) ;
-        SD = SD_upper+SD_lower
+        for pixy = 1:templateY
+            SD_upper(pixy,pix) = wgx_norm(pixy,pix) .* jbian(pix,(pix+(templateX*count))) ;
+            SD_lower(pixy,pix) = wgy_norm(pixy,pix) .* jbian((templateY+pixy),(pix+(templateX*count))) ;
+            SD(pixy,(pix+(templateX*count))) = SD_upper(pixy,pix) + SD_lower(pixy,pix) ;
+        end
     end
 end
-SD
+figure;
+imshow(SD)
+% SD

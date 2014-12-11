@@ -23,13 +23,13 @@ dScale=0;
 p=[scale,0,xTrans ; 0,scale,yTrans]; %p vector for translation in x, y, rotation in deg, and scale
 dp=[dx, dy, dRot,dScale];
 for pix=1:templateY
-    y_mat(:,pix) = (0:templateX-1)/(templateX-1) ;
+    y_mat(pix,:) = (0:templateX-1)/(templateX-1) ;
 end
 for pix=1:templateX
-    x_mat(pix,:) = (0:templateY-1)/(templateY-1) ;
+    x_mat(:,pix) = (0:templateY-1)/(templateY-1) ;
 end
-WP_jacobian_x = [ ones(templateX,templateY) , zeros(templateX,templateY) , x_mat] ;
-WP_jacobian_y = [ zeros(templateX,templateY) , ones(templateX,templateY) , y_mat] ;
+WP_jacobian_x = [ ones(templateY,templateX) , zeros(templateY,templateX) , y_mat] ;
+WP_jacobian_y = [ zeros(templateY,templateX) , ones(templateY,templateX) , x_mat] ;
 
 WP_jacobian = [WP_jacobian_x ; WP_jacobian_y ] ;
 figure
