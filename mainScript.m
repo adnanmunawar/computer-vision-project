@@ -49,6 +49,4 @@ for m=1:1:windowSize
     end
     
 end
-minX
-minY
-surf(1:m,1:n,-SSE)
+surf(1:m,1:n,-SSE) %Show negative error (to see a peak)
