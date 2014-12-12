@@ -62,3 +62,9 @@ H_inv = imcomplement(H) ;
 figure
 imshow(sd_image) ;
 imshow(H_inv) ;
+
+SD_param = sd_image' * diffIm2 ;
+imshow(SD_param) 
+
+param = H_inv * SD_param ;
+imshow(param) 
