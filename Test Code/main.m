@@ -1,5 +1,7 @@
 clc; clear all; close all;
 
+global templateX templateY ;
+
 %Loading the template
 template=imread('ball.jpg');
 templateX=size(template,2);
@@ -42,5 +44,22 @@ warpedGy=warp_image(wholeGy,p,template);
 figure ;
 imshowpair(warpedGx,warpedGy,'montage')
 
+%Step4 - Evaluating the Jacobian
+%Note that this is evaluated for Translation(x,y) and scale only
+for pix=1:templateY
+    y_mat(pix,:) = (0:templateX-1)/(templateX-1) ;
+end
+for pix=1:templateX
+    x_mat(:,pix) = (0:templateY-1)/(templateY-1) ;
+end
+WP_jacobian_x = [ ones(templateY,templateX) , zeros(templateY,templateX) , y_mat] ;
+WP_jacobian_y = [ zeros(templateY,templateX) , ones(templateY,templateX) , x_mat] ;
 
+WP_jacobian = [WP_jacobian_x ; WP_jacobian_y ] ;
+figure
+imshow(WP_jacobian) 
 
+%Step5 - Computing Steepest Descent images
+sd_image = steep_descent(warpedGx,warpedGy,WP_jacobian,template);
+figure
+imshow(sd_image)
