@@ -11,12 +11,9 @@ wholeY=size(wholeImage,1);
 initialTrans=findStart(wholeImage);
 
 % Set initial values
-xTrans=initialTrans(1);
-yTrans=initialTrans(2);
+xTrans=initialTrans(1)-templateX/3;
+yTrans=initialTrans(2)-templateY/3;
 scale=1;
 
 p=[scale,0,xTrans ; 0,scale,yTrans];
 
-testSection=warp_image(wholeImage,p,template);
-figure
-imshow(testSection);
