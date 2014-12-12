@@ -57,8 +57,6 @@ warpedGx=warp_image(wholeGx,p,template);
 warpedGy=warp_image(wholeGy,p,template);
 
 sd_image = steep_descent(warpedGx,warpedGy,WP_jacobian,template);
-H = Hessian(sd_image) ;
-H_inv = imcomplement(H) ;
+
 figure
-imshow(sd_image) ;
-imshow(H_inv) ;
+imshow(sd_image) 

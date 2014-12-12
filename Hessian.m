@@ -14,7 +14,7 @@ end
 hess = [ ones(hessX/3) * s_hess(1,1) , ones(hessX/3) * s_hess(1,2) , ones(hessX/3) * s_hess(1,3)  ;
     ones(hessX/3) * s_hess(2,1) , ones(hessX/3) * s_hess(2,2) , ones(hessX/3) * s_hess(2,3)  ;
     ones(hessX/3) * s_hess(3,1) , ones(hessX/3) * s_hess(3,2) , ones(hessX/3) *s_hess(3,3)  ] ;
-s_hess ;
+s_hess 
 hess = hess/1000 ;
 figure ;
 imshow(hess) ;
