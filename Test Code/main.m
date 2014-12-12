@@ -57,9 +57,14 @@ WP_jacobian_y = [ zeros(templateY,templateX) , ones(templateY,templateX) , x_mat
 
 WP_jacobian = [WP_jacobian_x ; WP_jacobian_y ] ;
 figure
-imshow(WP_jacobian) 
+imshow(WP_jacobian)
 
 %Step5 - Computing Steepest Descent images
 sd_image = steep_descent(warpedGx,warpedGy,WP_jacobian,template);
 figure
 imshow(sd_image)
+
+%Step6 - Compute Hessian Matrix
+H = Hessian(sd_image) ;
+figure;
+imshow(H)

@@ -5,7 +5,6 @@ templateY=size(template,1);
 
 wgx_norm = warp_gradx/255 ;
 wgy_norm = warp_grady/255 ;
-figure ; imshowpair(wgx_norm,wgy_norm,'montage') ;
 
 SD=zeros(templateY,templateX*3);
 for count=0:2

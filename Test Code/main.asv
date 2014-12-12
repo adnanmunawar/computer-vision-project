@@ -57,7 +57,39 @@ WP_jacobian_y = [ zeros(templateY,templateX) , ones(templateY,templateX) , x_mat
 
 WP_jacobian = [WP_jacobian_x ; WP_jacobian_y ] ;
 figure
-imshow(WP_jacobian) 
+imshow(WP_jacobian)
 
+%Step5 - Computing Steepest Descent images
+sd_image = steep_descent(warpedGx,warpedGy,WP_jacobian,template);
+figure
+imshow(sd_image)
 
+%Step6 - Compute Hessian Matrix
+% H = Hessian(sd_image) ;
+% figure;
+% imshow(H)
+
+hX = size(sd_image,2) ;
+hess = zeros(3) ;
+steep_trans = sd_image' ;
+
+for countx=0:2
+    for county=0:2
+        matrixA = sd_image(:,(county*hX/3)+1:(county+1)*hX/3) ;
+        matrixB = steep_trans((countx*hX/3)+1:(countx+1)*hX/3,:) ;
+        
+        prod = temp1*temp2 ;
+        hess(countx+1,county+1) =  sum(sum(prod)) ;
+    end
+end
+% hess = [ ones(hessX/3) * s_hess(1,1) , ones(hessX/3) * s_hess(1,2) , ones(hessX/3) * s_hess(1,3)  ;
+%     ones(hessX/3) * s_hess(2,1) , ones(hessX/3) * s_hess(2,2) , ones(hessX/3) * s_hess(2,3)  ;
+%     ones(hessX/3) * s_hess(3,1) , ones(hessX/3) * s_hess(3,2) , ones(hessX/3) *s_hess(3,3)  ] ;
+% s_hess
+% hess = hess/1000 ;
+% figure ;
+% imshow(hess) ;
+
+%subhess = ones(size(prod,2)) ;
+%subhess = total * subhess ;
 
