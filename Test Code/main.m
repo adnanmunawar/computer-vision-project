@@ -32,4 +32,15 @@ diffIm2=im2double(rgb2gray(testSection)-rgb2gray(template));
 figure;
 imshow(diffIm2) ;
 
+%Step3a - X and Y Gradient of the image
+wholeImageBW=rgb2gray(wholeImage);
+[wholeGx, wholeGy]=imgradientxy(wholeImageBW);
+
+%Step3b - Warping the Gradients
+warpedGx=warp_image(wholeGx,p,template);
+warpedGy=warp_image(wholeGy,p,template);
+figure ;
+imshowpair(warpedGx,warpedGy,'montage')
+
+
 
