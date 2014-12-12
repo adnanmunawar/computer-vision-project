@@ -1,0 +1,11 @@
+function hess = Hessian(steepest)
+hessX = size(steepest,2) ;
+hessY = size(steepest,1) ;
+hess =zeros(hessX);
+
+for countx=0:2
+    for county=0:2
+        hess(countx,county) = steepest(
+    end
+end
+end

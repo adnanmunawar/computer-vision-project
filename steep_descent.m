@@ -19,6 +19,4 @@ for count=0:2
         end
     end
 end
-figure;
-imshow(SD)
 % SD

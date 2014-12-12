@@ -55,6 +55,6 @@ wholeImageBW=rgb2gray(wholeImage);
 warpedGx=warp_image(wholeGx,p,template);
 warpedGy=warp_image(wholeGy,p,template);
 
-sd_image = steep_descent(warpedGx,warpedGy,template);
+sd_image = steep_descent(warpedGx,warpedGy,WP_jacobian,template);
 figure
 imshow(sd_image) 
