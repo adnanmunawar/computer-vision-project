@@ -57,6 +57,17 @@ warpedGx=warp_image(wholeGx,p,template);
 warpedGy=warp_image(wholeGy,p,template);
 
 sd_image = steep_descent(warpedGx,warpedGy,WP_jacobian,template);
-
+H = Hessian(sd_image) ;
+H_inv = imcomplement(H/1000) ;
 figure
-imshow(sd_image) 
+imshow(sd_image) ;
+imshow(H_inv) ;
+
+% SD_param = sd_image' * diffIm2 ;
+% imshow(SD_param) 
+% 
+% param = H_inv * SD_param ;
+% imshow(param) 
+
+sdt = sd_image' ;
+SD_param = [ (sdt(templateX,templateY)*
