@@ -68,3 +68,6 @@ imshow(sd_image)
 H = Hessian(sd_image) ;
 figure;
 imshow(H)
+
+%Step7 - Compute Steepest Descent Parameter Updates
+sd_p = sd_param(sd_image,diffIm2)
