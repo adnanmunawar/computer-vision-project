@@ -70,4 +70,8 @@ figure;
 imshow(H)
 
 %Step7 - Compute Steepest Descent Parameter Updates
-sd_p = sd_param(sd_image,diffIm2)
+sd_p = sd_param(sd_image,diffIm2) ;
+
+%Step8 - Computing change in parameters
+delta_p = H\sd_p ;
+
