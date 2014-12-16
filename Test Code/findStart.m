@@ -16,7 +16,7 @@ for w=1:width
         P=double([fullImage(l,w,1),fullImage(l,w,2),fullImage(l,w,3)]);
         distanceArray(w,l)=((P(1)-R)^2+(P(2)-G)^2+(P(3)-B)^2);
         distanceArray(w,l)=sqrt(distanceArray(w,l));
-        if distanceArray(w,l)<10
+        if distanceArray(w,l)<30
             xTotal=xTotal+w;
             yTotal=yTotal+l;
             foundPix=foundPix+1;

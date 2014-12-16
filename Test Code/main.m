@@ -4,24 +4,27 @@ global templateX templateY ;
 delta_p = [ 0 0 0 ] ;
 
 %Loading the template
-template=imread('ball.jpg');
+template=imread('ball2.jpg');
 templateX=size(template,2);
 templateY=size(template,1);
 
 %Loading the image
-wholeImage=imread('floor.jpg');
+wholeImage=imread('white.jpg');
 wholeX=size(wholeImage,2);
 wholeY=size(wholeImage,1);
 
 %Finding inital point for search
 initialTrans=findStart(wholeImage);
+%initialTrans = initialTrans - templateX/3 ;
+scale = 1 ;
+flag = 1 ;
 
-%while( delta_p(1) <= 0.00001)
+while( flag == 1)
     
     % Set initial values
-    xTrans=initialTrans(1)+delta_p(1);
-    yTrans=initialTrans(2)+delta_p(2);
-    scale=1+delta_p(3);
+    xTrans=initialTrans(1)+round(delta_p(1)*templateX);
+    yTrans=initialTrans(2)+round(delta_p(2)*templateY);
+    scale= 1 ;
     
     %Warp matrix
     p=[scale,0,xTrans ; 0,scale,yTrans];
@@ -32,8 +35,9 @@ initialTrans=findStart(wholeImage);
     imshow(testSection);
     
     %Step2 - Computing the error
-    diffIm=im2double(testSection-template);
-    diffIm2=im2double(rgb2gray(testSection)-rgb2gray(template));
+    %diffIm=im2double(testSection-template);
+    dummyIm=(rgb2gray(testSection)-rgb2gray(template));
+    diffIm2=im2double(dummyIm);
     %figure;
     %imshow(diffIm2) ;
     
@@ -76,5 +80,9 @@ initialTrans=findStart(wholeImage);
     sd_p = sd_param(sd_image,diffIm2) ;
     
     %Step8 - Computing change in parameters
-    delta_p = imcomplement(H) * sd_p ;
-%end
+    delta_p = H\sd_p 
+    
+    if(abs(delta_p(1)*templateY) <= 1 || abs(delta_p(2)*templateY) <= 1 )
+        flag = 0 ;
+    end
+end
