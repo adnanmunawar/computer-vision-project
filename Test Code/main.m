@@ -3,18 +3,29 @@ clc; clear all; close all;
 global templateX templateY ;
 delta_p = [ 0 0 0 ] ;
 
+%!!!!Works only with Linux, have to add OSX and Windows Support
+vid = videoinput('linuxvideo',1);
+set(vid, 'ReturnedColorSpace','RGB');
+preview(vid);
+disp('Waiting for 8 Seconds for Camera to Gain Focus');
+pause(8);
+wholeImage = getsnapshot(vid);
+
 %Loading the template
-template=imread('ball2.jpg');
+%template=imread('ball2.jpg');
+[template,center] = get_template(wholeImage);
 templateX=size(template,2);
 templateY=size(template,1);
 
 %Loading the image
-wholeImage=imread('white.jpg');
+%wholeImage=imread('white.jpg');
 wholeX=size(wholeImage,2);
 wholeY=size(wholeImage,1);
 
 %Finding inital point for search
-initialTrans=findStart(wholeImage);
+initialTrans=center;
+
+pause(100);
 %initialTrans = initialTrans - templateX/3 ;
 scale = 1 ;
 flag = 1 ;

@@ -1,10 +1,11 @@
-function get_template(image)
+function [template,center] = get_template(image)
 
 imageT_gray = im2bw(image);
 
 imageT_gray_filt = medfilt2(imageT_gray, [5 5]);
 
-imageT_gray_filt_bw = im2bw(imageT_gray_filt);
+imageT_gray_filt_bw = im2bw(imageT_gray_filt,...
+    find_threshhold(imageT_gray_filt));
 
 %corner are set to 0 after the 2D filtering above so explicitly setting
 %them to zero
@@ -18,20 +19,20 @@ imageT_gray_filt_bw(end-5:end,end-5:end) = 1;
 
 imageT = imageT_gray_filt_bw;
 
-imshow(imageT);
-figure;
 
 [topCorner, bottomCorner] = find_ball_clipping_xy(imageT);
 
+cropWidth = bottomCorner(1)-topCorner(1);
+cropHeight = bottomCorner(2)-topCorner(2);
+
 template = imcrop(image, [topCorner(1)...
     topCorner(2) ...
-    bottomCorner(1)-topCorner(1) ...
-    bottomCorner(2)-topCorner(2)]);
+    cropWidth ...
+    cropHeight]);
+
+center = topCorner + ((bottomCorner - topCorner)/2);
 
 imshow(template);
-
-
-
 end
 
 function[topCorner, bottomCorner] =  find_ball_clipping_xy(image)
