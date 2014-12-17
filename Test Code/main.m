@@ -18,6 +18,7 @@ initialTrans=findStart(wholeImage);
 %initialTrans = initialTrans - templateX/3 ;
 scale = 1 ;
 flag = 1 ;
+first_run = 1;
 
 while( flag == 1)
     
@@ -31,7 +32,6 @@ while( flag == 1)
     
     %Step1 - Warping the image
     testSection=warp_image(wholeImage,p,template);
-    figure
     imshow(testSection);
     
     %Step2 - Computing the error
@@ -53,6 +53,7 @@ while( flag == 1)
     
     %Step4 - Evaluating the Jacobian
     %Note that this is evaluated for Translation(x,y) and scale only
+    if (first_run == 1)
     for pix=1:templateY
         y_mat(pix,:) = (0:templateX-1)/(templateX-1) ;
     end
@@ -63,6 +64,9 @@ while( flag == 1)
     WP_jacobian_y = [ zeros(templateY,templateX) , ones(templateY,templateX) , x_mat] ;
     
     WP_jacobian = [WP_jacobian_x ; WP_jacobian_y ] ;
+    first_run = 0;
+    end
+    
     %figure
     %imshow(WP_jacobian)
     
@@ -82,7 +86,7 @@ while( flag == 1)
     %Step8 - Computing change in parameters
     delta_p = H\sd_p 
     
-    if(abs(delta_p(1)*templateY) <= 1 || abs(delta_p(2)*templateY) <= 1 )
+    if(abs(delta_p(1)*templateX) <= 1 && abs(delta_p(2)*templateY) <= 1 )
         flag = 0 ;
     end
 end
