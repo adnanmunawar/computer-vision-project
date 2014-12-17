@@ -19,12 +19,13 @@ initialTrans=findStart(wholeImage);
 scale = 1 ;
 flag = 1 ;
 first_run = 1;
+no_of_iterations = 1;
 
-while( flag == 1)
+while( flag == 1 && no_of_iterations <= 50)
     
     % Set initial values
-    xTrans=initialTrans(1)+round(delta_p(1)*templateX);
-    yTrans=initialTrans(2)+round(delta_p(2)*templateY);
+    xTrans=initialTrans(1)+round(delta_p(1)*wholeX);
+    yTrans=initialTrans(2)+round(delta_p(2)*wholeY);
     scale= 1 ;
     
     %Warp matrix
@@ -32,6 +33,7 @@ while( flag == 1)
     
     %Step1 - Warping the image
     testSection=warp_image(wholeImage,p,template);
+    figure;
     imshow(testSection);
     
     %Step2 - Computing the error
@@ -86,7 +88,8 @@ while( flag == 1)
     %Step8 - Computing change in parameters
     delta_p = H\sd_p 
     
-    if(abs(delta_p(1)*templateX) <= 1 && abs(delta_p(2)*templateY) <= 1 )
+    if(abs(delta_p(1)*wholeX) <= 1 && abs(delta_p(2)*wholeY) <= 1 )
         flag = 0 ;
     end
+    no_of_iterations = no_of_iterations + 1;
 end
