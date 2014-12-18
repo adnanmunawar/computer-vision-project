@@ -10,11 +10,11 @@ SD=zeros(templateY,templateX*3);
 for count=0:2
     SD_upper(:,:,count+1) = zeros(templateY,templateX) ;
     SD_lower(:,:,count+1) = zeros(templateY,templateX) ;
-    for pix = 1:templateX
-        for pixy = 1:templateY
-            SD_upper(pixy,pix,count+1) = wgx_norm(pixy,pix) .* jbian(pix,(pix+(templateX*count))) ;
-            SD_lower(pixy,pix,count+1) = wgy_norm(pixy,pix) .* jbian((templateY+pixy),(pix+(templateX*count))) ;
-            SD(pixy,(pix+(templateX*count))) = SD_upper(pixy,pix,count+1) + SD_lower(pixy,pix,count+1) ;
+    for pix_x = 1:templateX
+        for pix_y = 1:templateY
+            SD_upper(pix_y,pix_x,count+1) = wgx_norm(pix_y,pix_x) .* jbian(pix_x,(pix_x+(templateX*count))) ;
+            SD_lower(pix_y,pix_x,count+1) = wgy_norm(pix_y,pix_x) .* jbian((templateY+pix_y),(pix_x+(templateX*count))) ;
+            SD(pix_y,(pix_x+(templateX*count))) = SD_upper(pix_y,pix_x,count+1) + SD_lower(pix_y,pix_x,count+1) ;
         end
     end
 end
