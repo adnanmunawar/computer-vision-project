@@ -3,7 +3,8 @@ function[p, testSection] = lucasKanade(wholeImage, template, seed_p)
 %initialTrans = initialTrans - templateX/3 ;
 scale = 1 ;
 flag = 1 ;
-first_run = 1;
+global first_run;
+global WP_jacobian;
 no_of_iterations = 1;
 
 initialTrans = [seed_p(1,3) seed_p(2,3)];
@@ -68,7 +69,7 @@ while( flag == 1 && no_of_iterations <= 50)
     end
     WP_jacobian_x = [ ones(templateY,templateX) , zeros(templateY,templateX) , y_mat] ;
     WP_jacobian_y = [ zeros(templateY,templateX) , ones(templateY,templateX) , x_mat] ;
-    
+     
     WP_jacobian = [WP_jacobian_x ; WP_jacobian_y ] ;
     first_run = 0;
     end

@@ -6,18 +6,24 @@ templateY=size(template,1);
 wgx_norm = warp_gradx/255 ;
 wgy_norm = warp_grady/255 ;
 
+jbian_upper = jbian(1:templateY,:);
+jbian_lower = jbian(templateY+1:end,:);
+
+jbian_upper = reshape(jbian_upper, templateY, templateX, 3 );
+jbian_lower = reshape(jbian_lower, templateY, templateX, 3 );
+
 SD=zeros(templateY,templateX*3);
-for count=0:2
-    SD_upper(:,:,count+1) = zeros(templateY,templateX) ;
-    SD_lower(:,:,count+1) = zeros(templateY,templateX) ;
-    for pix_x = 1:templateX
-        for pix_y = 1:templateY
-            SD_upper(pix_y,pix_x,count+1) = wgx_norm(pix_y,pix_x) .* jbian(pix_x,(pix_x+(templateX*count))) ;
-            SD_lower(pix_y,pix_x,count+1) = wgy_norm(pix_y,pix_x) .* jbian((templateY+pix_y),(pix_x+(templateX*count))) ;
-            SD(pix_y,(pix_x+(templateX*count))) = SD_upper(pix_y,pix_x,count+1) + SD_lower(pix_y,pix_x,count+1) ;
-        end
-    end
+
+SD_upper = zeros(templateY,templateX,3) ;
+SD_lower = zeros(templateY,templateX,3) ;
+for i=1:3   
+    SD_upper(:,:,i) = wgx_norm.*jbian_upper(:,:,i);
+    SD_lower(:,:,i) = wgy_norm.*jbian_lower(:,:,i);
 end
+
+SD = SD_upper + SD_lower;
+SD = reshape(SD, templateY, templateX*3);
+
 % figure;
 % imshowpair(SD_upper(:,:,1),SD_lower(:,:,1),'montage') ;
 % figure;

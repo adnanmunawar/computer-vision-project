@@ -2,6 +2,8 @@ clc;
 clear all;
 close all;
 
+global first_run;
+first_run = 1;
 %!!!!Works only with Linux, have to add OSX and Windows Support
 vid = VideoReader('moto.mov');
 
@@ -21,9 +23,10 @@ for i = 1:50
 i
 wholeImage = read(vid,i);
 [current_p, test_section] = lucasKanade(wholeImage, template, initial_p);
-if (current_p(1,3) > wholeX || current_p(2,3) > wholeY)
+if (current_p(1,3) > wholeX - size(template,2) || current_p(2,3) > wholeY - size(template,1) ...
+        || current_p(1,3)<0 + size(template,2) || current_p(2,3) < 0 + size(template,1))
     disp('Fatal Error! returned point lies outside the image, aborting');
-    current_p;
+    current_p
     break;
 end
 figure(3);
