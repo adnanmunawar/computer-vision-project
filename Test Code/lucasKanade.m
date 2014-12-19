@@ -4,10 +4,12 @@ function[p, testSection] = lucasKanade(wholeImage, template, seed_p)
 scale = 1 ;
 flag = 1 ;
 global first_run;
-global WP_jacobian;
+global WP_jacobian_x;
+global WP_jacobian_y;
 no_of_iterations = 1;
 
-initialTrans = [seed_p(1,3) seed_p(2,3)];
+xTrans = seed_p(1,3);
+yTrans = seed_p(2,3) ;
 global templateX templateY ;
 delta_p = [ 0 0 0 ] ;
 
@@ -23,8 +25,8 @@ wholeY=size(wholeImage,1);
 while( flag == 1 && no_of_iterations <= 50)
     
     % Set initial values
-    xTrans=initialTrans(1)+round(delta_p(1)*wholeX);
-    yTrans=initialTrans(2)+round(delta_p(2)*wholeY);
+    xTrans=xTrans+delta_p(1);
+    yTrans=yTrans+delta_p(2);
     scale= 1 ;
     
     %Warp matrix
@@ -50,7 +52,7 @@ while( flag == 1 && no_of_iterations <= 50)
     
     %Step3a - X and Y Gradient of the image
     wholeImageBW=rgb2gray(wholeImage);
-    [wholeGx, wholeGy]=imgradientxy(wholeImageBW);
+    [wholeGx, wholeGy]=imgradientxy(wholeImageBW,'IntermediateDifference');
     
     %Step3b - Warping the Gradients
     warpedGx=warp_image(wholeGx,p,template);
@@ -70,7 +72,8 @@ while( flag == 1 && no_of_iterations <= 50)
     WP_jacobian_x = [ ones(templateY,templateX) , zeros(templateY,templateX) , y_mat] ;
     WP_jacobian_y = [ zeros(templateY,templateX) , ones(templateY,templateX) , x_mat] ;
      
-    WP_jacobian = [WP_jacobian_x ; WP_jacobian_y ] ;
+    WP_jacobian_x = reshape(WP_jacobian_x,templateY,templateX,3);
+    WP_jacobian_y = reshape(WP_jacobian_y,templateY,templateX,3);
     first_run = 0;
     end
     
@@ -78,7 +81,7 @@ while( flag == 1 && no_of_iterations <= 50)
     %imshow(WP_jacobian)
     
     %Step5 - Computing Steepest Descent images
-    sd_image = steep_descent(warpedGx,warpedGy,WP_jacobian,template);
+    sd_image = steep_descent(warpedGx,warpedGy,WP_jacobian_x,WP_jacobian_y,template);
     %figure
     %imshow(sd_image)
     
@@ -89,11 +92,15 @@ while( flag == 1 && no_of_iterations <= 50)
     
     %Step7 - Compute Steepest Descent Parameter Updates
     sd_p = sd_param(sd_image,diffIm2) ;
-    
+  
     %Step8 - Computing change in parameters
-    delta_p = H\sd_p ;
+    delta_p = H\sd_p 
     
-    if(abs(delta_p(1)*wholeX) <= 1 && abs(delta_p(2)*wholeY) <= 1 )
+    if(abs(delta_p(1)) > 40 || abs(delta_p(2)) > 40 )
+        flag = 0;
+    end
+    
+    if(abs(delta_p(1)) < 0.5 && abs(delta_p(2)) < 0.5 )
         flag = 0 ;
     end
     no_of_iterations = no_of_iterations + 1;

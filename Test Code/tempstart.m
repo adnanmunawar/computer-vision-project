@@ -8,6 +8,7 @@ first_run = 1;
 vid = VideoReader('moto.mov');
 
 wholeImage = read(vid,1);
+wholeImage = im2double(wholeImage);
 wholeX = size(wholeImage,2);
 wholeY = size(wholeImage,1);
 
@@ -22,6 +23,7 @@ figure(3);
 for i = 1:50
 i
 wholeImage = read(vid,i);
+wholeImage = im2double(wholeImage);
 [current_p, test_section] = lucasKanade(wholeImage, template, initial_p);
 if (current_p(1,3) > wholeX - size(template,2) || current_p(2,3) > wholeY - size(template,1) ...
         || current_p(1,3)<0 + size(template,2) || current_p(2,3) < 0 + size(template,1))
