@@ -40,7 +40,7 @@ while( flag == 1 && no_of_iterations <= 50)
     %diffIm=im2double(testSection-template);
     if (size(testSection,1) == size(template,1) && ...
             size(testSection,2) == size(template,2))
-    dummyIm=(rgb2gray(testSection)-rgb2gray(template));
+    dummyIm=(rgb2gray(template)-rgb2gray(testSection));
     diffIm2=im2double(dummyIm);
     
     else
