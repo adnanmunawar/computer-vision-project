@@ -16,8 +16,6 @@ if(first_run == 1)
 template = rgb2gray(template);
 end
 
-global templateX templateY ;
-
 templateX=size(template,2);
 templateY=size(template,1);
 
