@@ -100,7 +100,7 @@ while( flag == 1 && no_of_iterations <= 50)
         flag = 0;
     end
     
-    if(abs(delta_p(1)) < 0.5 && abs(delta_p(2)) < 0.5 )
+    if(abs(delta_p(1)) < 0.3 && abs(delta_p(2)) < 0.3 )
         flag = 0 ;
     end
     no_of_iterations = no_of_iterations + 1;
