@@ -18,8 +18,10 @@ initial_p = [1 0 start(1) ; 0 1 start(2)];
 nframes = vid.NumberOfFrames;
 x = zeros(1,50);
 y = zeros(1,50);
-figure(3);
-%figure(4);
+
+rectShape = vision.ShapeInserter('Shape','Rectangles','BorderColor',...
+    'Custom','CustomBorderColor',[255 0 0]);
+
 for i = 1:50
 i
 wholeImage = read(vid,i);
@@ -31,15 +33,11 @@ if (current_p(1,3) > wholeX - size(template,2) || current_p(2,3) > wholeY - size
     current_p
     break;
 end
-figure(3);
-imshow(wholeImage);
-hold on;
-x(i) = current_p(1,3);
-y(i) = current_p(2,3);
-plot(x(1:i),y(1:i),'.');
-hold off;
-%figure(4);
-%imshow(test_section);
+rect = int32([current_p(1,3)-(size(test_section,1)/2) ...
+    current_p(2,3)-(size(test_section,2)/2) ...
+    size(test_section,1) size(test_section,2)]);
+J = step(rectShape , wholeImage , rect);
+imshow(J)
 initial_p = current_p;
 template = test_section;
 end
