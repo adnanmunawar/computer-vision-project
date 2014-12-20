@@ -1,4 +1,4 @@
-function[p, testSection] = lucasKanade(wholeImage, template, seed_p)
+function[p, testSection] = lucasKanade(wholeImage, template, p)
 
 %initialTrans = initialTrans - templateX/3 ;
 scale = 1 ;
@@ -8,29 +8,16 @@ global WP_jacobian_x;
 global WP_jacobian_y;
 no_of_iterations = 1;
 
-xTrans = seed_p(1,3);
-yTrans = seed_p(2,3) ;
 global templateX templateY ;
-delta_p = [ 0 0 0 ] ;
 
 templateX=size(template,2);
 templateY=size(template,1);
 
 %Loading the image
 %wholeImage=imread('white.jpg');
-wholeX=size(wholeImage,2);
-wholeY=size(wholeImage,1);
 
 
-while( flag == 1 && no_of_iterations <= 50)
-    
-    % Set initial values
-    xTrans=xTrans+delta_p(1);
-    yTrans=yTrans+delta_p(2);
-    scale= 1 ;
-    
-    %Warp matrix
-    p=[scale,0,xTrans ; 0,scale,yTrans];
+while( flag == 1 && no_of_iterations <= 10)
     
     %Step1 - Warping the image
     testSection=warp_image(wholeImage,p,template);
@@ -94,14 +81,19 @@ while( flag == 1 && no_of_iterations <= 50)
     sd_p = sd_param(sd_image,diffIm2) ;
   
     %Step8 - Computing change in parameters
-    delta_p = H\sd_p 
+    delta_p = H\sd_p;
     
     if(abs(delta_p(1)) > 40 || abs(delta_p(2)) > 40 )
         flag = 0;
+        warning('Step size of over 40 Pixels, Something is wrong');
     end
     
     if(abs(delta_p(1)) < 0.3 && abs(delta_p(2)) < 0.3 )
         flag = 0 ;
+    else
+    %Update the x and y offset values only of warp parameters
+        p(1,3) = p(1,3)+delta_p(1);
+        p(2,3) = p(2,3)+delta_p(2);      
     end
     no_of_iterations = no_of_iterations + 1;
 end
