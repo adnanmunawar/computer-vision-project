@@ -8,6 +8,14 @@ global WP_jacobian_x;
 global WP_jacobian_y;
 no_of_iterations = 1;
 
+wholeImage = rgb2gray(wholeImage);
+
+%Convert the template for grayscale for the first time only as succesive
+%iterations will take the gray scaled template itself
+if(first_run == 1)
+template = rgb2gray(template);
+end
+
 global templateX templateY ;
 
 templateX=size(template,2);
@@ -27,9 +35,7 @@ while( flag == 1 && no_of_iterations <= 10)
     %diffIm=im2double(testSection-template);
     if (size(testSection,1) == size(template,1) && ...
             size(testSection,2) == size(template,2))
-    dummyIm=(rgb2gray(template)-rgb2gray(testSection));
-    diffIm2=im2double(dummyIm);
-    
+    diffIm2= template - testSection;
     else
        disp('Warning, size of template and warped image not equal aborting operation');
        break;
@@ -38,8 +44,7 @@ while( flag == 1 && no_of_iterations <= 10)
     %imshow(diffIm2) ;
     
     %Step3a - X and Y Gradient of the image
-    wholeImageBW=rgb2gray(wholeImage);
-    [wholeGx, wholeGy]=imgradientxy(wholeImageBW,'IntermediateDifference');
+    [wholeGx, wholeGy]=imgradientxy(wholeImage,'IntermediateDifference');
     
     %Step3b - Warping the Gradients
     warpedGx=warp_image(wholeGx,p,template);
