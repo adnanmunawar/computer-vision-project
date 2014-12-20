@@ -1,5 +1,9 @@
 function SD = steep_descent(wgx_norm,wgy_norm,jbian_x,jbian_y,template)
 
+%This function is used to calculate steepest descent images. This function
+%has been optimized using built in Matlab functions for element wise matrix
+%multiplication and matrix summations.
+
 templateX=size(template,2);
 templateY=size(template,1);
 
