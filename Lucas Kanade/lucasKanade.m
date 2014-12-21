@@ -42,7 +42,7 @@ while( flag == 1 && no_of_iterations <= 10)
     %imshow(diffIm2) ;
     
     %Step3a - X and Y Gradient of the image
-    [wholeGx, wholeGy]=imgradientxy(wholeImage,'IntermediateDifference');
+    [wholeGx, wholeGy]=imgradientxy(wholeImage,'CentralDifference');
     
     %Step3b - Warping the Gradients
     warpedGx=warp_image(wholeGx,p,template);
